@@ -378,6 +378,8 @@ package-lock.json linguist-generated=true
 
 ## Troubleshooting
 
+For detailed troubleshooting steps, see the [Troubleshooting Guide](docs/TROUBLESHOOTING.md).
+
 ### Webhooks not received
 
 1. Check your webhook URL is correct in GitHub App settings

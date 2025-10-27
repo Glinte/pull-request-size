@@ -1,46 +1,46 @@
-const context = require('./context');
+const context = require('./context')
 
-function freeProSubscription(login) {
-  const organizations = ['AdaSupport', 'one-acre-fund', 'ReadyOn-Inc'];
-  const match = organizations.find((o) => o.toLowerCase() === String(login).toLowerCase());
-  return match !== undefined;
+function freeProSubscription (login) {
+  const organizations = ['AdaSupport', 'one-acre-fund', 'ReadyOn-Inc']
+  const match = organizations.find((o) => o.toLowerCase() === String(login).toLowerCase())
+  return match !== undefined
 }
 
-function invoicedProSubscription(login) {
-  const organizations = ['pace-int', 'honestbank', 'MacPaw', 'stoplightio', 'try-keep', 'trustpair', 'ccycloud', 'bestpass'];
-  const match = organizations.find((o) => o.toLowerCase() === String(login).toLowerCase());
-  return match !== undefined;
+function invoicedProSubscription (login) {
+  const organizations = ['pace-int', 'honestbank', 'MacPaw', 'stoplightio', 'try-keep', 'trustpair', 'ccycloud', 'bestpass']
+  const match = organizations.find((o) => o.toLowerCase() === String(login).toLowerCase())
+  return match !== undefined
 }
 
-async function isProPlan(app, ctx) {
+async function isProPlan (app, ctx) {
   try {
-    const id = context.getRepoOwnerId(ctx);
-    const login = context.getRepoOwnerLogin(ctx);
-    app.log(`Checking Marketplace for organization: https://github.com/${login} ...`);
+    const id = context.getRepoOwnerId(ctx)
+    const login = context.getRepoOwnerLogin(ctx)
+    app.log(`Checking Marketplace for organization: https://github.com/${login} ...`)
     if (freeProSubscription(login)) {
-      app.log('Found free Pro ❤️ plan');
-      return true;
+      app.log('Found free Pro ❤️ plan')
+      return true
     }
     if (invoicedProSubscription(login)) {
-      app.log('Found invoiced Pro plan');
-      return true;
+      app.log('Found invoiced Pro plan')
+      return true
     }
 
-    const res = await ctx.octokit.apps.getSubscriptionPlanForAccount({ account_id: id });
-    const purchase = res.data.marketplace_purchase;
+    const res = await ctx.octokit.apps.getSubscriptionPlanForAccount({ account_id: id })
+    const purchase = res.data.marketplace_purchase
 
     if (purchase.plan.price_model === 'FREE') {
-      app.log('Found Free plan');
-      return false;
+      app.log('Found Free plan')
+      return false
     }
-    app.log('Found Pro 💰 plan');
-    return true;
+    app.log('Found Pro 💰 plan')
+    return true
   } catch (error) {
-    app.log('Marketplace purchase not found');
-    return false;
+    app.log('Marketplace purchase not found')
+    return false
   }
 }
 
 module.exports = {
-  isProPlan,
-};
+  isProPlan
+}

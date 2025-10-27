@@ -1,60 +1,60 @@
-const helpers = require('./test-helpers');
-const pullRequestOpenedPayload = require('./fixtures/pull_request.opened.json');
-const marketplaceFreePlan = require('./fixtures/marketplace_free_plan.json');
-const marketplaceProPlan = require('./fixtures/marketplace_pro_plan.json');
-const plans = require('../src/plans');
+const helpers = require('./test-helpers')
+const pullRequestOpenedPayload = require('./fixtures/pull_request.opened.json')
+const marketplaceFreePlan = require('./fixtures/marketplace_free_plan.json')
+const marketplaceProPlan = require('./fixtures/marketplace_pro_plan.json')
+const plans = require('../src/plans')
 
-let probot;
+let probot
 
 beforeAll(() => {
-  helpers.initNock();
-});
+  helpers.initNock()
+})
 
 beforeEach(() => {
-  probot = helpers.initProbot();
-});
+  probot = helpers.initProbot()
+})
 
 test('installed as marketplace free plan but before pro plan introduction', async () => {
   const ctx = {
     octokit: {
-      apps: { getSubscriptionPlanForAccount: () => ({ data: marketplaceFreePlan }) },
+      apps: { getSubscriptionPlanForAccount: () => ({ data: marketplaceFreePlan }) }
     },
-    payload: pullRequestOpenedPayload,
-  };
+    payload: pullRequestOpenedPayload
+  }
 
-  const result = await plans.isProPlan(probot, ctx);
-  expect(result).toBeFalsy();
-});
+  const result = await plans.isProPlan(probot, ctx)
+  expect(result).toBeFalsy()
+})
 
 test('installed as marketplace pro plan', async () => {
   const ctx = {
     octokit: {
-      apps: { getSubscriptionPlanForAccount: () => ({ data: marketplaceProPlan }) },
+      apps: { getSubscriptionPlanForAccount: () => ({ data: marketplaceProPlan }) }
     },
-    payload: pullRequestOpenedPayload,
-  };
+    payload: pullRequestOpenedPayload
+  }
 
-  const result = await plans.isProPlan(probot, ctx);
-  expect(result).toBeTruthy();
-});
+  const result = await plans.isProPlan(probot, ctx)
+  expect(result).toBeTruthy()
+})
 
 test('incoived Pro subscription', async () => {
-  const pullRequestOpenedPayloadCopy = JSON.parse(JSON.stringify(pullRequestOpenedPayload));
-  pullRequestOpenedPayloadCopy.repository.owner.login = 'pace-int';
+  const pullRequestOpenedPayloadCopy = JSON.parse(JSON.stringify(pullRequestOpenedPayload))
+  pullRequestOpenedPayloadCopy.repository.owner.login = 'pace-int'
   const ctx = {
-    payload: pullRequestOpenedPayloadCopy,
-  };
-  const result = await plans.isProPlan(probot, ctx);
-  expect(result).toBeTruthy();
-});
+    payload: pullRequestOpenedPayloadCopy
+  }
+  const result = await plans.isProPlan(probot, ctx)
+  expect(result).toBeTruthy()
+})
 
 test('free Pro subscription', async () => {
-  const pullRequestOpenedPayloadCopy = JSON.parse(JSON.stringify(pullRequestOpenedPayload));
-  pullRequestOpenedPayloadCopy.repository.owner.login = 'AdaSupport';
+  const pullRequestOpenedPayloadCopy = JSON.parse(JSON.stringify(pullRequestOpenedPayload))
+  pullRequestOpenedPayloadCopy.repository.owner.login = 'AdaSupport'
   const ctx = {
-    payload: pullRequestOpenedPayloadCopy,
-  };
+    payload: pullRequestOpenedPayloadCopy
+  }
 
-  const result = await plans.isProPlan(probot, ctx);
-  expect(result).toBeTruthy();
-});
+  const result = await plans.isProPlan(probot, ctx)
+  expect(result).toBeTruthy()
+})

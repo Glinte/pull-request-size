@@ -20,6 +20,11 @@ use with private organization repos._
 
 Want to run your own instance? See the [Self-Hosting Guide](SELF_HOSTING.md) for detailed instructions on deploying this app to various platforms (AWS Lambda, Heroku, Docker, Vercel, and more).
 
+**Quick Links:**
+- 🚀 [Quick Start Guide](QUICK_START.md) - Get up and running in minutes
+- 📊 [Deployment Comparison](docs/DEPLOYMENT_COMPARISON.md) - Compare different hosting options
+- 📚 Platform-specific guides: [Heroku](docs/deployment/heroku.md) | [AWS Lambda](docs/deployment/aws-lambda.md) | [Docker](docs/deployment/docker.md)
+
 ## Sizing
 
 | Name | Description |
