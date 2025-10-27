@@ -16,6 +16,10 @@ Pull Request Size is a GitHub App that applies `size/*` labels to Pull Requests 
 _This app is free to use for personal and public organization repos. There is a paid plan for
 use with private organization repos._
 
+### Self-Hosting
+
+Want to run your own instance? See the [Self-Hosting Guide](SELF_HOSTING.md) for detailed instructions on deploying this app to various platforms (AWS Lambda, Heroku, Docker, Vercel, and more).
+
 ## Sizing
 
 | Name | Description |
