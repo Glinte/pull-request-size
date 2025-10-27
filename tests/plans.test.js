@@ -38,7 +38,7 @@ test('installed as marketplace pro plan', async () => {
   expect(result).toBeTruthy()
 })
 
-test('incoived Pro subscription', async () => {
+test('invoiced Pro subscription', async () => {
   const pullRequestOpenedPayloadCopy = JSON.parse(JSON.stringify(pullRequestOpenedPayload))
   pullRequestOpenedPayloadCopy.repository.owner.login = 'pace-int'
   const ctx = {
