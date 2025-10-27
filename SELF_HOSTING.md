@@ -92,6 +92,13 @@ PRIVATE_KEY="-----BEGIN RSA PRIVATE KEY-----\nYOUR_PRIVATE_KEY_CONTENT_HERE\n---
 ```
 
 **Important**: To format your private key for the `.env` file:
+
+**Easy way - use the provided script:**
+```bash
+./scripts/format-private-key.sh your-private-key.pem
+```
+
+**Manual way:**
 ```bash
 # Read your .pem file and format it as a single line
 cat your-private-key.pem | awk 'NF {sub(/\r/, ""); printf "%s\\n",$0;}'
@@ -103,6 +110,8 @@ cat your-private-key.pem | base64
 ```
 
 ## Step 4: Choose a Deployment Method
+
+**Not sure which deployment option to choose?** See the [Deployment Comparison Guide](docs/DEPLOYMENT_COMPARISON.md) for detailed comparisons of all options.
 
 ### Option A: Local Development/Testing
 
